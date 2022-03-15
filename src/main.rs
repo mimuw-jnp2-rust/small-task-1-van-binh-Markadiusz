@@ -23,8 +23,8 @@ const TAKEAWAY_FEE: u32 = 1;
 #[derive(Debug, Clone)]
 struct Order {
     is_takeaway: bool,
-    dishes: std::collections::HashMap<Dish,u32>,
-    cnt: u32
+    dishes: std::collections::HashMap<Dish, u32>,
+    cnt: u32,
 }
 
 impl Order {
@@ -32,19 +32,20 @@ impl Order {
         Order {
             is_takeaway: false,
             dishes: std::collections::HashMap::new(),
-            cnt: 0
+            cnt: 0,
         }
     }
 
     fn add_dish(&mut self, dish: Dish) {
-        self.dishes.insert(dish,
-                           (if self.dishes.contains_key(&dish) {
-                               self.dishes[&dish]
-                           }
-                           else {
-                               0
-                           }) + 1);
-        self.cnt = self.cnt + 1;
+        self.dishes.insert(
+            dish,
+            (if self.dishes.contains_key(&dish) {
+                self.dishes[&dish]
+            } else {
+                0
+            }) + 1,
+        );
+        self.cnt += 1;
     }
 
     fn set_takeaway(&mut self) {
@@ -54,8 +55,7 @@ impl Order {
     fn dish_count(&self, dish: Dish) -> u32 {
         if self.dishes.contains_key(&dish) {
             self.dishes[&dish]
-        }
-        else {
+        } else {
             0
         }
     }
@@ -112,14 +112,14 @@ impl VanBinh {
     pub fn new() -> VanBinh {
         VanBinh {
             orders_count: 1,
-            customers: Vec::new()
+            customers: Vec::new(),
         }
     }
 
     fn add_customer(&mut self, name: String, favorite_order: Order) {
         self.customers.push(Customer {
-            name: name,
-            favorite_order: favorite_order
+            name,
+            favorite_order,
         });
     }
 
@@ -128,7 +128,7 @@ impl VanBinh {
     }
 
     fn increase_orders_count(&mut self) {
-        self.orders_count = self.orders_count + 1;
+        self.orders_count += 1;
     }
 
     fn get_orders_count(&self) -> u32 {
